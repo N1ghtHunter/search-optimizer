@@ -32,7 +32,9 @@
 	"scripts": {
 		"build": "tsc",
 		"test": "jest",
-		"prepublishOnly": "npm run build"
+		"prepare": "npm run build",
+		"lint": "eslint 'src/**/*.ts' --fix",
+		"prepublishOnly": "npm run lint && npm run test && npm run build"
 	},
 	"keywords": [
 		"search",
@@ -55,6 +57,10 @@
 		"react-dom": {
 			"optional": true
 		}
+	},
+	"engines": {
+		"node": ">=14",
+		"npm": ">=6"
 	},
 	"devDependencies": {
 		"@tanstack/react-query": "^5.74.3",
