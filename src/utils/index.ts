@@ -11,20 +11,20 @@
  * @returns A debounced version of the function
  */
 export function debounce<T extends (...args: any[]) => any>(func: T, delay: number): (...args: Parameters<T>) => void {
-	let timeoutId: ReturnType<typeof setTimeout> | null = null;
+  let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
-	return function (this: any, ...args: Parameters<T>): void {
-		const context = this;
+  return function (this: any, ...args: Parameters<T>): void {
+    const context = this;
 
-		if (timeoutId !== null) {
-			clearTimeout(timeoutId);
-		}
+    if (timeoutId !== null) {
+      clearTimeout(timeoutId);
+    }
 
-		timeoutId = setTimeout(() => {
-			timeoutId = null;
-			func.apply(context, args);
-		}, delay);
-	};
+    timeoutId = setTimeout(() => {
+      timeoutId = null;
+      func.apply(context, args);
+    }, delay);
+  };
 }
 
 /**
@@ -35,32 +35,32 @@ export function debounce<T extends (...args: any[]) => any>(func: T, delay: numb
  * @returns The processed string
  */
 export function processInput(
-	value: string,
-	{
-		trimInput = true,
-		lowercaseInput = true,
-		inputProcessor,
-	}: {
-		trimInput?: boolean;
-		lowercaseInput?: boolean;
-		inputProcessor?: (value: string) => string;
-	}
+  value: string,
+  {
+    trimInput = true,
+    lowercaseInput = true,
+    inputProcessor,
+  }: {
+    trimInput?: boolean;
+    lowercaseInput?: boolean;
+    inputProcessor?: (value: string) => string;
+  },
 ): string {
-	let processedValue = value;
+  let processedValue = value;
 
-	if (trimInput) {
-		processedValue = processedValue.trim();
-	}
+  if (trimInput) {
+    processedValue = processedValue.trim();
+  }
 
-	if (lowercaseInput) {
-		processedValue = processedValue.toLowerCase();
-	}
+  if (lowercaseInput) {
+    processedValue = processedValue.toLowerCase();
+  }
 
-	if (inputProcessor) {
-		processedValue = inputProcessor(processedValue);
-	}
+  if (inputProcessor) {
+    processedValue = inputProcessor(processedValue);
+  }
 
-	return processedValue;
+  return processedValue;
 }
 
 /**
@@ -72,17 +72,17 @@ export function processInput(
  * @returns Boolean indicating whether a search should be performed
  */
 export function shouldPerformSearch(query: string, previousQuery: string, minChars: number): boolean {
-	// Skip if query is too short
-	if (query.length < minChars) {
-		return false;
-	}
+  // Skip if query is too short
+  if (query.length < minChars) {
+    return false;
+  }
 
-	// Skip if query is the same as previous
-	if (query === previousQuery) {
-		return false;
-	}
+  // Skip if query is the same as previous
+  if (query === previousQuery) {
+    return false;
+  }
 
-	return true;
+  return true;
 }
 
 /**
@@ -91,10 +91,10 @@ export function shouldPerformSearch(query: string, previousQuery: string, minCha
  * @returns A new AbortController instance
  */
 export function createAbortController(): AbortController | null {
-	// Check if AbortController is available (it's a newer API)
-	if (typeof AbortController !== 'undefined') {
-		return new AbortController();
-	}
+  // Check if AbortController is available (it's a newer API)
+  if (typeof AbortController !== 'undefined') {
+    return new AbortController();
+  }
 
-	return null;
+  return null;
 }
