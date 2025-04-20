@@ -2,6 +2,11 @@ name: Release
 on:
   push:
     branches: [main]
+
+permissions:
+  contents: write # allow pushing commits & tags
+  packages: write # allow npm publish (optional)
+
 jobs:
   release:
     runs-on: ubuntu-latest
