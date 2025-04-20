@@ -1,0 +1,76 @@
+{
+	"name": "search-optimizer",
+	"version": "0.0.1",
+	"description": "An optimized, framework-agnostic solution for handling search-as-you-type functionality",
+	"author": "Mazin Islam <mazinislam431@gmail.com>",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"default": "./dist/index.js"
+		},
+		"./react": {
+			"types": "./dist/adapters/react/index.d.ts",
+			"default": "./dist/adapters/react/index.js"
+		},
+		"./vue": {
+			"types": "./dist/adapters/vue/index.d.ts",
+			"default": "./dist/adapters/vue/index.js"
+		},
+		"./core": {
+			"types": "./dist/core/index.d.ts",
+			"default": "./dist/core/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"directories": {
+		"test": "test"
+	},
+	"scripts": {
+		"build": "tsc",
+		"test": "jest",
+		"prepublishOnly": "npm run build"
+	},
+	"keywords": [
+		"search",
+		"debounce",
+		"search-optimizer",
+		"autocomplete",
+		"search-input",
+		"race-condition",
+		"input-optimization"
+	],
+	"license": "MIT",
+	"peerDependencies": {
+		"react": "^16.9.0 || ^17.0.0 || ^18.0.0",
+		"react-dom": "^16.9.0 || ^17.0.0 || ^18.0.0"
+	},
+	"peerDependenciesMeta": {
+		"react": {
+			"optional": true
+		},
+		"react-dom": {
+			"optional": true
+		}
+	},
+	"devDependencies": {
+		"@tanstack/react-query": "^5.74.3",
+		"@testing-library/dom": "^9.3.4",
+		"@testing-library/jest-dom": "^6.6.3",
+		"@testing-library/react": "^14.1.2",
+		"@testing-library/react-hooks": "^8.0.1",
+		"@types/jest": "^29.5.0",
+		"@types/node": "^18.15.11",
+		"@types/react": "^18.2.48",
+		"@types/react-dom": "^18.2.18",
+		"jest": "^29.5.0",
+		"jest-environment-jsdom": "^29.7.0",
+		"react": "^18.2.0",
+		"react-dom": "^18.2.0",
+		"ts-jest": "^29.1.0",
+		"typescript": "^5.0.4"
+	}
+}

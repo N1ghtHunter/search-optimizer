@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1.0"
+		/>
+		<title>SearchOptimizer Demo</title>
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				max-width: 800px;
+				margin: 40px auto;
+				padding: 0 20px;
+				background-color: #f5f5f5;
+			}
+			.search-container {
+				position: relative;
+				width: 100%;
+				max-width: 500px;
+				margin: 0 auto;
+				background: white;
+				padding: 20px;
+				border-radius: 8px;
+				box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+			}
+			.search-input {
+				width: 100%;
+				padding: 12px;
+				font-size: 16px;
+				border: 2px solid #ddd;
+				border-radius: 4px;
+				box-sizing: border-box;
+				transition: border-color 0.3s ease;
+			}
+			.search-input:focus {
+				outline: none;
+				border-color: #007bff;
+			}
+			.results-container {
+				position: absolute;
+				top: calc(100% - 20px);
+				left: 0;
+				right: 0;
+				background: white;
+				border: 1px solid #ddd;
+				border-radius: 0 0 4px 4px;
+				margin-top: 4px;
+				box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+				display: none;
+				max-height: 300px;
+				overflow-y: auto;
+			}
+			.results-container.active {
+				display: block;
+			}
+			.result-item {
+				padding: 10px 15px;
+				cursor: pointer;
+				border-bottom: 1px solid #eee;
+			}
+			.result-item:last-child {
+				border-bottom: none;
+			}
+			.result-item:hover {
+				background-color: #f8f9fa;
+			}
+			.loading {
+				text-align: center;
+				padding: 15px;
+				color: #666;
+			}
+			.error {
+				color: #dc3545;
+				padding: 10px;
+				text-align: center;
+			}
+			.header {
+				text-align: center;
+				margin-bottom: 30px;
+			}
+			.header h1 {
+				color: #333;
+				margin-bottom: 10px;
+			}
+			.header p {
+				color: #666;
+				margin: 0;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="header">
+			<h1>SearchOptimizer Demo</h1>
+			<p>Start typing to see search results</p>
+		</div>
+
+		<div class="search-container">
+			<input
+				type="text"
+				class="search-input"
+				placeholder="Try searching for fruits (e.g., 'apple', 'banana')"
+				aria-label="Search input"
+			/>
+			<div class="results-container">
+				<!-- Results will be inserted here -->
+			</div>
+		</div>
+
+		<script type="module">
+			import { createSearchOptimizer } from '../../dist/index.js';
+
+			// Mock data for demonstration
+			const mockData = [
+				'Apple',
+				'Apricot',
+				'Avocado',
+				'Banana',
+				'Blackberry',
+				'Blueberry',
+				'Cherry',
+				'Coconut',
+				'Cranberry',
+				'Date',
+				'Dragon Fruit',
+				'Durian',
+				'Elderberry',
+				'Fig',
+				'Grape',
+				'Grapefruit',
+				'Guava',
+				'Honeydew',
+				'Kiwi',
+				'Kumquat',
+				'Lemon',
+				'Lime',
+				'Lychee',
+				'Mango',
+				'Melon',
+				'Orange',
+				'Papaya',
+				'Peach',
+				'Pear',
+				'Pineapple',
+				'Plum',
+				'Raspberry',
+				'Strawberry',
+				'Tangerine',
+				'Watermelon',
+			];
+
+			// Mock search executor with artificial delay
+			const searchExecutor = {
+				execute: async (query) => {
+					// Simulate network delay (200-600ms)
+					const delay = Math.random() * 400 + 200;
+					await new Promise((resolve) => setTimeout(resolve, delay));
+
+					// Simulate occasional errors (1% chance)
+					if (Math.random() < 0.01) {
+						throw new Error('Search failed! Please try again.');
+					}
+
+					return mockData.filter((item) => item.toLowerCase().includes(query.toLowerCase()));
+				},
+			};
+
+			// Get DOM elements
+			const input = document.querySelector('.search-input');
+			const resultsContainer = document.querySelector('.results-container');
+
+			// Create search optimizer instance
+			const searchOptimizer = createSearchOptimizer(searchExecutor, {
+				debounceDelay: 300,
+				minChars: 1,
+				onSearchStart: () => {
+					resultsContainer.innerHTML = '<div class="loading">Searching...</div>';
+					resultsContainer.classList.add('active');
+				},
+				onSearchSuccess: (results) => {
+					if (results.length === 0) {
+						resultsContainer.innerHTML = '<div class="result-item">No results found</div>';
+					} else {
+						resultsContainer.innerHTML = results.map((result) => `<div class="result-item">${result}</div>`).join('');
+					}
+					resultsContainer.classList.add('active');
+				},
+				onSearchError: (error) => {
+					resultsContainer.innerHTML = `<div class="error">Error: ${error.message}</div>`;
+					resultsContainer.classList.add('active');
+				},
+			});
+
+			// Handle input changes
+			input.addEventListener('input', (e) => {
+				const value = e.target.value;
+				if (!value) {
+					resultsContainer.classList.remove('active');
+					return;
+				}
+				searchOptimizer.setQuery(value);
+			});
+
+			// Handle result item clicks
+			resultsContainer.addEventListener('click', (e) => {
+				const resultItem = e.target.closest('.result-item');
+				if (resultItem) {
+					input.value = resultItem.textContent;
+					resultsContainer.classList.remove('active');
+				}
+			});
+
+			// Close results when clicking outside
+			document.addEventListener('click', (e) => {
+				if (!e.target.closest('.search-container')) {
+					resultsContainer.classList.remove('active');
+				}
+			});
+
+			// Handle keyboard navigation
+			input.addEventListener('keydown', (e) => {
+				const items = resultsContainer.querySelectorAll('.result-item');
+				const activeItem = resultsContainer.querySelector('.result-item.active');
+
+				switch (e.key) {
+					case 'ArrowDown':
+						e.preventDefault();
+						if (!resultsContainer.classList.contains('active')) return;
+						if (!activeItem) {
+							items[0]?.classList.add('active');
+						} else {
+							const nextItem = activeItem.nextElementSibling;
+							if (nextItem) {
+								activeItem.classList.remove('active');
+								nextItem.classList.add('active');
+							}
+						}
+						break;
+
+					case 'ArrowUp':
+						e.preventDefault();
+						if (!resultsContainer.classList.contains('active')) return;
+						if (activeItem) {
+							const prevItem = activeItem.previousElementSibling;
+							if (prevItem) {
+								activeItem.classList.remove('active');
+								prevItem.classList.add('active');
+							}
+						}
+						break;
+
+					case 'Enter':
+						if (activeItem) {
+							input.value = activeItem.textContent;
+							resultsContainer.classList.remove('active');
+						}
+						break;
+
+					case 'Escape':
+						resultsContainer.classList.remove('active');
+						break;
+				}
+			});
+		</script>
+	</body>
+</html>
