@@ -10,5 +10,14 @@ jobs:
           node-version: 18
       - run: npm ci
       - run: npm run lint
-      - run: npm test
       - run: npm run build
+
+      - name: Run tests with coverage
+        run: npm test
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          flags: unittests
