@@ -1,10 +1,23 @@
 # 🔍 SearchOptimizer
 
-[![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
-[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![npm version](https://img.shields.io/npm/v/search-optimizer.svg?style=flat)](https://www.npmjs.com/package/search-optimizer)
+[![npm version](https://img.shields.io/npm/v/search-optimizer.svg)](https://www.npmjs.com/package/search-optimizer)
+[![build status](https://github.com/your-org/search-optimizer/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/search-optimizer/actions)
+[![coverage](https://img.shields.io/codecov/c/github/your-org/search-optimizer)](https://codecov.io/gh/your-org/search-optimizer)
+[![license](https://img.shields.io/npm/l/search-optimizer)](LICENSE)
 
 > An optimized, framework-agnostic solution for handling search-as-you-type functionality.
+
+## 📖 Table of Contents
+
+1. [Overview](#-overview)
+2. [Installation](#-installation)
+3. [Quick Start](#-quick-start)
+4. [API](#-api-reference)
+5. [Adapters & Hooks](#-adapters--hooks)
+6. [Examples](#-examples)
+7. [Contributing](#-contributing)
+8. [Changelog](#-changelog)
+9. [License](#-license)
 
 ## 📋 Overview
 
