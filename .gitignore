@@ -1,4 +1,8 @@
 node_modules/
 dist/
 coverage/
-
+.repomixignore
+repomix-output.xml
+repomix.config.json
+.cursor
+.gitignore
