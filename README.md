@@ -1,8 +1,8 @@
 # 🔍 SearchOptimizer
 
 [![npm version](https://img.shields.io/npm/v/search-optimizer.svg)](https://www.npmjs.com/package/search-optimizer)
-[![build status](https://github.com/your-org/search-optimizer/actions/workflows/ci.yml/badge.svg)](https://github.com/your-org/search-optimizer/actions)
-[![coverage](https://img.shields.io/codecov/c/github/your-org/search-optimizer)](https://codecov.io/gh/your-org/search-optimizer)
+[![build status](https://github.com/N1ghtHunter/search-optimizer/actions/workflows/ci.yml/badge.svg)](https://github.com/N1ghtHunter/search-optimizer/actions)
+[![coverage](https://img.shields.io/codecov/c/github/N1ghtHunter/search-optimizer)](https://codecov.io/gh/N1ghtHunter/search-optimizer)
 [![license](https://img.shields.io/npm/l/search-optimizer)](LICENSE)
 
 > An optimized, framework-agnostic solution for handling search-as-you-type functionality.
@@ -46,29 +46,29 @@ import { createSearchOptimizer, createFetchExecutor } from 'search-optimizer';
 
 // Create a search executor using fetch
 const searchExecutor = createFetchExecutor({
-	baseUrl: 'https://api.example.com/search',
-	queryParam: 'q',
+  baseUrl: 'https://api.example.com/search',
+  queryParam: 'q',
 });
 
 // Create the search optimizer
 const searchOptimizer = createSearchOptimizer(searchExecutor, {
-	debounceDelay: 500,
-	minChars: 3,
+  debounceDelay: 500,
+  minChars: 3,
 });
 
 // Get the search input element
 const searchInput = document.getElementById('search-input');
 
 // Connect the input to the search optimizer
-searchInput.addEventListener('input', (event) => {
-	searchOptimizer.setQuery(event.target.value);
+searchInput.addEventListener('input', event => {
+  searchOptimizer.setQuery(event.target.value);
 });
 
 // Subscribe to changes in the search state
 setInterval(() => {
-	console.log('Loading:', searchOptimizer.loading);
-	console.log('Results:', searchOptimizer.results);
-	console.log('Error:', searchOptimizer.error);
+  console.log('Loading:', searchOptimizer.loading);
+  console.log('Results:', searchOptimizer.results);
+  console.log('Error:', searchOptimizer.error);
 }, 1000);
 ```
 
@@ -79,43 +79,39 @@ import React, { useState, useEffect } from 'react';
 import { useSearchOptimizer, createFetchExecutor } from 'search-optimizer';
 
 function SearchComponent() {
-	// Create the search executor
-	const searchExecutor = React.useMemo(
-		() =>
-			createFetchExecutor({
-				baseUrl: 'https://api.example.com/search',
-				queryParam: 'q',
-			}),
-		[]
-	);
+  // Create the search executor
+  const searchExecutor = React.useMemo(
+    () =>
+      createFetchExecutor({
+        baseUrl: 'https://api.example.com/search',
+        queryParam: 'q',
+      }),
+    [],
+  );
 
-	// Use the hook to manage search state
-	const { inputProps, loading, results, error } = useSearchOptimizer(searchExecutor, {
-		debounceDelay: 400,
-		minChars: 2,
-	});
+  // Use the hook to manage search state
+  const { inputProps, loading, results, error } = useSearchOptimizer(searchExecutor, {
+    debounceDelay: 400,
+    minChars: 2,
+  });
 
-	return (
-		<div>
-			<input
-				type='text'
-				placeholder='Search...'
-				{...inputProps}
-			/>
+  return (
+    <div>
+      <input type="text" placeholder="Search..." {...inputProps} />
 
-			{loading && <div>Loading...</div>}
+      {loading && <div>Loading...</div>}
 
-			{results && (
-				<ul>
-					{results.map((item) => (
-						<li key={item.id}>{item.name}</li>
-					))}
-				</ul>
-			)}
+      {results && (
+        <ul>
+          {results.map(item => (
+            <li key={item.id}>{item.name}</li>
+          ))}
+        </ul>
+      )}
 
-			{error && <div>Error: {error.message}</div>}
-		</div>
-	);
+      {error && <div>Error: {error.message}</div>}
+    </div>
+  );
 }
 ```
 
