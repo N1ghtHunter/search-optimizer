@@ -1,0 +1,16 @@
+name: Release Preview
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  pr-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci --legacy-peer-deps && npm run build
+
+      - name: Generate Release Notes
+        run: npx semantic-release --dry-run --plugins \
+          @semantic-release/commit-analyzer,@semantic-release/release-notes-generator
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
