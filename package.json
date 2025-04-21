@@ -30,11 +30,12 @@
     "test": "test"
   },
   "scripts": {
-    "build": "tsc",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
     "test": "jest",
     "prepare": "npm run build",
-    "lint": "eslint \"src/**/*.{ts,tsx}\" --fix",
-    "format": "prettier --write \"src/**/*.{ts,tsx}\"",
+    "lint": "eslint \"src/**/*.{ts,tsx}\" \"test/**/*.{ts,tsx}\" \"examples/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx}\" \"test/**/*.{ts,tsx}\" \"examples/**/*.{ts,tsx}\"",
     "lint-fix": "npm run format && npm run lint",
     "prepublishOnly": "npm run lint-fix && npm run test && npm run build",
     "release": "semantic-release"

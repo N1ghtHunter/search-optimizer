@@ -4,10 +4,10 @@ import { cleanup } from '@testing-library/react-hooks';
 
 // Configure testing library
 configure({
-	testIdAttribute: 'data-testid',
+  testIdAttribute: 'data-testid',
 });
 
 // Cleanup after each test
 afterEach(() => {
-	cleanup();
+  cleanup();
 });

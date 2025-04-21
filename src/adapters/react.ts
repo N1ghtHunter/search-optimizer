@@ -186,7 +186,3 @@ export function useSearchOptimizer<T = any>(
     inputProps,
   };
 }
-
-// For backward compatibility
-/** @deprecated Use useSearchOptimizer instead */
-export const useTypeAhead = useSearchOptimizer;

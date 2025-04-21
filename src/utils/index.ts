@@ -1,5 +1,5 @@
 /**
- * Utility functions for TypeAhead
+ * Utility functions for SearchOptimizer
  */
 
 /**
