@@ -20,7 +20,13 @@ jobs:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
           always-auth: true
-      - run: npm ci --legacy-peer-deps && npm run build
+
+      - name: Install dependencies and build
+        run: |
+          # install dependencies and build the project
+          # --legacy-peer-deps is needed for some packages that have peer dependency issues
+          # see https://docs.npmjs.com/cli/v7/commands/npm-install#legacy-peer-deps
+          npm ci --legacy-peer-deps && npm run build
 
       - name: Debug NPM auth
         run: |
