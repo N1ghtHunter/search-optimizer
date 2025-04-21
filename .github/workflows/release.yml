@@ -28,12 +28,6 @@ jobs:
           # see https://docs.npmjs.com/cli/v7/commands/npm-install#legacy-peer-deps
           npm ci --legacy-peer-deps && npm run build
 
-      - name: Debug NPM auth
-        run: |
-          # write it explicitly so we can inspect
-          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-          cat ~/.npmrc
-
       - run: npx semantic-release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
