@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/N1ghtHunter/search-optimizer/compare/v1.0.0...v1.0.1) (2025-04-21)
+
+### Bug Fixes
+
+* add descriptive name for install dependencies and build step in release workflow ([6299e0c](https://github.com/N1ghtHunter/search-optimizer/commit/6299e0c226562a2934a32565b954558c46cb9322))
+
 ## 1.0.0 (2025-04-21)
 
 ### Bug Fixes
