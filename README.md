@@ -10,9 +10,9 @@
 ## 📖 Table of Contents
 
 1. [Overview](#-overview)
-2. [Installation](#-installation)
+2. [Installation](#️-installation)
 3. [Quick Start](#-quick-start)
-4. [API](#-api-reference)
+4. [API Reference](#-api-reference)
 5. [Adapters & Hooks](#-adapters--hooks)
 6. [Examples](#-examples)
 7. [Contributing](#-contributing)
@@ -37,7 +37,7 @@ npm install search-optimizer
 yarn add search-optimizer
 ```
 
-## 🚀 Usage
+## 🚀 Quick Start
 
 ### Basic Usage
 
@@ -75,7 +75,7 @@ setInterval(() => {
 ### React Hook Usage
 
 ```jsx
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useSearchOptimizer, createFetchExecutor } from 'search-optimizer';
 
 function SearchComponent() {
@@ -143,19 +143,43 @@ Creates a new SearchOptimizer instance.
 - `onSearchError`: Callback when search fails
 - `onSearchCanceled`: Callback when search is canceled
 
+## 🔌 Adapters & Hooks
+
 ### Adapters
 
 #### `createFetchExecutor(options)`
 
 Creates a SearchExecutor using the Fetch API.
 
+**Options:**
+
+- `baseUrl`: Base URL for the search endpoint (required)
+- `queryParam`: Query parameter name for the search term (default: 'q')
+- `fetchOptions`: Additional fetch request options
+- `responseTransformer`: Function to transform the fetch response
+
 #### `createAxiosExecutor(options)`
 
 Creates a SearchExecutor using Axios.
 
+**Options:**
+
+- `axios`: Axios instance to use for requests (required)
+- `baseUrl`: Base URL for the search endpoint (required)
+- `queryParam`: Query parameter name for the search term (default: 'q')
+- `axiosOptions`: Additional axios request options
+
 #### `createGraphQLExecutor(options)`
 
 Creates a SearchExecutor for GraphQL clients.
+
+**Options:**
+
+- `client`: GraphQL client instance (required)
+- `query`: GraphQL query document (required)
+- `queryVariableName`: Name of the variable to pass the search term (default: 'query')
+- `resultExtractor`: Function to extract search results from the GraphQL response
+- `additionalVariables`: Additional variables to include with every GraphQL request
 
 ### React Hook
 
@@ -163,6 +187,41 @@ Creates a SearchExecutor for GraphQL clients.
 
 React hook for using SearchOptimizer in functional components.
 
+**Returns:**
+
+- `query`: Current search query string
+- `loading`: Boolean indicating if a search is in progress
+- `results`: Search results (null if no search has been performed)
+- `error`: Error object (null if no error occurred)
+- `setQuery`: Function to update the search query
+- `search`: Function to manually trigger a search
+- `cancel`: Function to cancel the current search
+- `reset`: Function to reset the search state
+- `inputProps`: Props object for easy React input element integration
+
+## 🧪 Examples
+
+Check out the examples directory for complete working demos:
+
+- [Basic React Example](examples/react/SearchOptimizerHookExample.tsx)
+- [React Query Integration](examples/react-query/) (Coming soon)
+
+## 🤝 Contributing
+
+We welcome contributions to SearchOptimizer! If you'd like to contribute, please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+Please make sure to update tests as appropriate.
+
+## 📝 Changelog
+
+See the [CHANGELOG.md](CHANGELOG.md) file for details on version updates.
+
 ## 📄 License
 
-MIT
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
