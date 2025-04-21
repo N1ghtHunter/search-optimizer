@@ -1,6 +1,6 @@
 {
   "name": "search-optimizer",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "An optimized, framework-agnostic solution for handling search-as-you-type functionality",
   "author": "Mazin Islam <mazinislam431@gmail.com>",
   "main": "./dist/index.js",
