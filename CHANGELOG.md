@@ -1,3 +1,13 @@
+## [1.1.0](https://github.com/N1ghtHunter/search-optimizer/compare/v1.0.1...v1.1.0) (2025-04-22)
+
+### Features
+
+* add release preview workflow for pull requests ([d071831](https://github.com/N1ghtHunter/search-optimizer/commit/d07183113f499790ed45ea5ac54b17332b9082cd))
+
+### Bug Fixes
+
+* update tsconfig to remove source maps from build and add tslib as a dependency ([bc208d6](https://github.com/N1ghtHunter/search-optimizer/commit/bc208d6ff58907941e6f5920407b0a5accd49424))
+
 ## [1.0.1](https://github.com/N1ghtHunter/search-optimizer/compare/v1.0.0...v1.0.1) (2025-04-21)
 
 ### Bug Fixes
