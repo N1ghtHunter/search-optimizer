@@ -1,3 +1,13 @@
+## [2.0.0-dev.1](https://github.com/N1ghtHunter/search-optimizer/compare/v1.2.0-dev.1...v2.0.0-dev.1) (2025-05-07)
+
+### ⚠ BREAKING CHANGES
+
+* This release includes breaking changes.
+
+### Miscellaneous Chores
+
+* release breaking change ([af59098](https://github.com/N1ghtHunter/search-optimizer/commit/af59098b0d94474ffb89a46aa6f8dae9150fabf9))
+
 ## [1.2.0-dev.1](https://github.com/N1ghtHunter/search-optimizer/compare/v1.1.0...v1.2.0-dev.1) (2025-05-07)
 
 ### Features
