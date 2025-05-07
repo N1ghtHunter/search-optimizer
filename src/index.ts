@@ -15,3 +15,6 @@ export * from './types';
 
 // Export utilities
 export { debounce, processInput, shouldPerformSearch } from './utils';
+
+// Export generic adapter
+export { createGenericExecutor } from './adapters/generic';
