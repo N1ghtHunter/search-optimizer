@@ -8,14 +8,14 @@
   "sideEffects": false,
   "exports": {
     ".": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
-      "require": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "require": "./dist/index.js"
     },
     "./adapters/*": {
+      "types": "./dist/adapters/*/index.d.ts",
       "import": "./dist/adapters/*/index.js",
-      "require": "./dist/adapters/*/index.js",
-      "types": "./dist/adapters/*/index.d.ts"
+      "require": "./dist/adapters/*/index.js"
     }
   },
   "files": [
@@ -38,6 +38,12 @@
   "dependencies": {
     "tslib": "^2.6.2"
   },
+  "size-limit": [
+    {
+      "path": "dist/index.js",
+      "gzip": true
+    }
+  ],
   "keywords": [
     "search",
     "debounce",
@@ -73,6 +79,7 @@
     "@semantic-release/github": "^11.0.1",
     "@semantic-release/npm": "^12.0.1",
     "@semantic-release/release-notes-generator": "^14.0.3",
+    "@size-limit/preset-small-lib": "^11.2.0",
     "@tanstack/react-query": "^5.74.3",
     "@testing-library/dom": "^9.3.4",
     "@testing-library/jest-dom": "^6.6.3",
@@ -95,6 +102,8 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "semantic-release": "^24.2.3",
+    "size-limit": "^11.2.0",
+    "source-map-explorer": "^2.5.3",
     "ts-jest": "^29.1.0",
     "typescript": "^5.0.4"
   }
