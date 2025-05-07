@@ -6,3 +6,4 @@ repomix-output.xml
 repomix.config.json
 .cursor
 .gitignore
+.vscode
