@@ -3,7 +3,7 @@
  * Allows using the Axios HTTP client with SearchOptimizer
  */
 
-import { SearchExecutor } from '../types';
+import type { SearchExecutor } from '../../types';
 
 // Define the type for axios-like interface
 // This allows users to provide their own axios instance

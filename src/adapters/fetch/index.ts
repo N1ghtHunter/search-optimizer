@@ -3,7 +3,7 @@
  * Allows using the Fetch API with SearchOptimizer
  */
 
-import { SearchExecutor } from '../types';
+import type { SearchExecutor } from '../../types';
 
 export interface FetchAdapterOptions {
   /**

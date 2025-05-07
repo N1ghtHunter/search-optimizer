@@ -7,8 +7,8 @@
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { createSearchOptimizer } from '../core';
-import type { SearchExecutor, SearchOptimizerOptions, SearchOptimizerResult } from '../types';
+import { createSearchOptimizer } from '../../core';
+import type { SearchExecutor, SearchOptimizerOptions, SearchOptimizerResult } from '../../types';
 
 /**
  * Props object returned by the useSearchOptimizer hook for easy input element integration
