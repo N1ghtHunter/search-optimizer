@@ -5,22 +5,17 @@
   "author": "Mazin Islam <mazinislam431@gmail.com>",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "sideEffects": false,
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     },
-    "./react": {
-      "types": "./dist/adapters/react/index.d.ts",
-      "default": "./dist/adapters/react/index.js"
-    },
-    "./vue": {
-      "types": "./dist/adapters/vue/index.d.ts",
-      "default": "./dist/adapters/vue/index.js"
-    },
-    "./core": {
-      "types": "./dist/core/index.d.ts",
-      "default": "./dist/core/index.js"
+    "./adapters/*": {
+      "import": "./dist/adapters/*/index.js",
+      "require": "./dist/adapters/*/index.js",
+      "types": "./dist/adapters/*/index.d.ts"
     }
   },
   "files": [

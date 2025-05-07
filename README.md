@@ -42,7 +42,8 @@ yarn add search-optimizer
 ### Basic Usage
 
 ```javascript
-import { createSearchOptimizer, createFetchExecutor } from 'search-optimizer';
+import { createSearchOptimizer } from 'search-optimizer';
+import { createFetchExecutor } from 'search-optimizer/adapters/fetch';
 
 // Create a search executor using fetch
 const searchExecutor = createFetchExecutor({
@@ -76,7 +77,8 @@ setInterval(() => {
 
 ```jsx
 import React from 'react';
-import { useSearchOptimizer, createFetchExecutor } from 'search-optimizer';
+import { useSearchOptimizer } from 'search-optimizer/adapters/react';
+import { createFetchExecutor } from 'search-optimizer/adapters/fetch';
 
 function SearchComponent() {
   // Create the search executor
@@ -144,6 +146,27 @@ Creates a new SearchOptimizer instance.
 - `onSearchCanceled`: Callback when search is canceled
 
 ## 🔌 Adapters & Hooks
+
+### Import Paths
+
+Each adapter is now available as a separate import:
+
+```javascript
+// Core functionality
+import { createSearchOptimizer } from 'search-optimizer';
+
+// Fetch adapter
+import { createFetchExecutor } from 'search-optimizer/adapters/fetch';
+
+// Axios adapter
+import { createAxiosExecutor } from 'search-optimizer/adapters/axios';
+
+// GraphQL adapter
+import { createGraphQLExecutor } from 'search-optimizer/adapters/graphql';
+
+// React hook
+import { useSearchOptimizer } from 'search-optimizer/adapters/react';
+```
 
 ### Adapters
 

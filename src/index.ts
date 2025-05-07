@@ -13,11 +13,5 @@ export type { SearchExecutor, SearchOptimizerOptions, SearchOptimizerResult } fr
 // Export types
 export * from './types';
 
-// Export adapters
-export { createFetchExecutor } from './adapters/fetch';
-export { createAxiosExecutor } from './adapters/axios';
-export { createGraphQLExecutor } from './adapters/graphql';
-export { useSearchOptimizer } from './adapters/react';
-
 // Export utilities
 export { debounce, processInput, shouldPerformSearch } from './utils';
