@@ -2,15 +2,71 @@ name: Release Preview
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   pr-preview:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
       - run: npm ci --legacy-peer-deps && npm run build
 
-      - name: Generate Release Notes
-        run: npx semantic-release --dry-run --plugins \
-          @semantic-release/commit-analyzer,@semantic-release/release-notes-generator
+      - name: Generate release preview
+        id: semantic
+        run: |
+          # 1) run semantic-release in dry-run mode (no tags, no publish)
+          npx semantic-release \
+            --branch "$GITHUB_BASE_REF" \
+            --dry-run --no-ci --dry-run-ignore-scripts \
+            > sr-output.txt || true
+            
+          # 2) Use Node to extract the final JSON object, parse it, and set our outputs
+          node << 'EOF' >> $GITHUB_OUTPUT
+          const fs = require('fs');
+
+          // read the entire dry-run log
+          const log = fs.readFileSync('sr-output.txt', 'utf8');
+
+          // match the last {…} block (the semantic-release summary)
+          const m = log.match(/\{[\s\S]*\}$/);
+
+          let version = '';
+          let notes   = 'No release will be generated.';
+
+          if (m) {
+            const data = JSON.parse(m[0]);
+            version = data.nextRelease?.version   || '';
+            notes   = data.nextRelease?.notes     || notes;
+          }
+
+          // expose to later steps
+          console.log('version=' + version);
+          console.log('notes<<EOF\n' + notes + '\nEOF');
+          EOF
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on the PR
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🚀 **Release Preview**  
+            The next version will be **${{ steps.semantic.outputs.version }}** when this PR is merged into **main**.
+
+            <details>
+            <summary>Release notes</summary>
+
+            ${{ steps.semantic.outputs.notes }}
+            </details>

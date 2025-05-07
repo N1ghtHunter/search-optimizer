@@ -164,6 +164,9 @@ import { createAxiosExecutor } from 'search-optimizer/adapters/axios';
 // GraphQL adapter
 import { createGraphQLExecutor } from 'search-optimizer/adapters/graphql';
 
+// Generic adapter for custom implementations
+import { createGenericExecutor } from 'search-optimizer/adapters/generic';
+
 // React hook
 import { useSearchOptimizer } from 'search-optimizer/adapters/react';
 ```
@@ -203,6 +206,64 @@ Creates a SearchExecutor for GraphQL clients.
 - `queryVariableName`: Name of the variable to pass the search term (default: 'query')
 - `resultExtractor`: Function to extract search results from the GraphQL response
 - `additionalVariables`: Additional variables to include with every GraphQL request
+
+#### `createGenericExecutor(searchFn, options)`
+
+Creates a SearchExecutor using any custom search implementation.
+
+**Parameters:**
+
+- `searchFn`: Function that performs the search, with signature `(query: string, signal?: AbortSignal) => Promise<T>`
+- `options`: Additional configuration options
+  - `name`: Name for this custom executor (optional, useful for debugging)
+  - `errorHandler`: Optional custom error handler function
+
+**Example:**
+
+```javascript
+// Create a custom executor with any search implementation
+const myCustomExecutor = createGenericExecutor(
+  async (query, signal) => {
+    // Custom implementation using any API/library
+    const results = await customSearchLibrary.search(query, { signal });
+    return results.items;
+  },
+  { name: 'CustomLibraryExecutor' },
+);
+
+// Use with SearchOptimizer
+const searchOptimizer = createSearchOptimizer(myCustomExecutor);
+```
+
+#### Creating a Custom Adapter (Direct Implementation)
+
+You can also implement the `SearchExecutor` interface directly for complete control:
+
+```javascript
+import { SearchExecutor, createSearchOptimizer } from 'search-optimizer';
+
+// Implement the SearchExecutor interface directly
+const myCustomExecutor: SearchExecutor = {
+  execute: async (query, signal) => {
+    // Your custom implementation here
+    // Full control over error handling, request formatting, etc.
+    const response = await fetch(`https://api.example.com/search?term=${query}`, {
+      headers: { 'Authorization': 'Bearer YOUR_API_KEY' },
+      signal
+    });
+
+    if (!response.ok) {
+      throw new Error(`Search failed: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data.results;
+  }
+};
+
+// Use with SearchOptimizer
+const searchOptimizer = createSearchOptimizer(myCustomExecutor);
+```
 
 ### React Hook
 

@@ -1,3 +1,23 @@
+## [2.0.0-dev.1](https://github.com/N1ghtHunter/search-optimizer/compare/v1.2.0-dev.1...v2.0.0-dev.1) (2025-05-07)
+
+### ⚠ BREAKING CHANGES
+
+* This release includes breaking changes.
+
+### Miscellaneous Chores
+
+* release breaking change ([af59098](https://github.com/N1ghtHunter/search-optimizer/commit/af59098b0d94474ffb89a46aa6f8dae9150fabf9))
+
+## [1.2.0-dev.1](https://github.com/N1ghtHunter/search-optimizer/compare/v1.1.0...v1.2.0-dev.1) (2025-05-07)
+
+### Features
+
+* add dist-after and dist-before to .cursorignore ([8a1d1ba](https://github.com/N1ghtHunter/search-optimizer/commit/8a1d1ba288c3a25b3811fcf5d359573d5dc9115b))
+* add examples for SearchOptimizer with SWR, Axios, and Fetch in respective frameworks ([4b80a37](https://github.com/N1ghtHunter/search-optimizer/commit/4b80a37b8ef5b9a1f9715d8bd8f0d15691bd797c))
+* add generic adapter for SearchOptimizer with customizable search executors ([5766c26](https://github.com/N1ghtHunter/search-optimizer/commit/5766c267c227d07be75bfb7ef959cac15e08a3c7))
+* add generic executor for custom search implementations in README ([8293840](https://github.com/N1ghtHunter/search-optimizer/commit/8293840c078e51898e30c4c113080455a23b7a54))
+* add GitHub Actions workflow for dev release automation ([2390970](https://github.com/N1ghtHunter/search-optimizer/commit/2390970c7e4ea0e42aca67e2d9e3f826f966ff73))
+
 ## [1.1.0](https://github.com/N1ghtHunter/search-optimizer/compare/v1.0.1...v1.1.0) (2025-04-22)
 
 ### Features
