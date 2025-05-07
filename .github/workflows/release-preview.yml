@@ -2,8 +2,8 @@ name: Release Preview
 on:
   pull_request:
     branches: [main]
+    types: [opened, synchronize, reopened]
 
-# Define required permissions explicitly
 permissions:
   contents: read
   pull-requests: write
@@ -21,19 +21,33 @@ jobs:
           node-version: '20.x'
       - run: npm ci --legacy-peer-deps && npm run build
 
-      - name: Generate Release Notes
+      - name: Generate release preview
+        id: semantic
         run: |
-          # Create temporary .releaserc.json for PR preview
-          echo '{
-            "branches": ["main"],
-            "plugins": [
-              "@semantic-release/commit-analyzer",
-              "@semantic-release/release-notes-generator"
-            ]
-          }' > .releaserc.preview.json
-
-          # Run semantic-release with the preview config and output to log
-          echo "Running release preview with dry run..."
-          npx semantic-release --dry-run --extends ./.releaserc.preview.json --branches main
+          # run semantic-release in dry-run and capture JSON output
+          npx semantic-release --dry-run --no-ci --dry-run-ignore-scripts > sr-output.txt || true
+          # extract version and notes from the JSON blob
+          VERSION=$(jq -r '.nextRelease.version' sr-output.txt)
+          NOTES=$(jq -r '.nextRelease.notes' sr-output.txt)
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          # wrap notes so they survive newlines
+          echo "notes<<EOF" >> $GITHUB_OUTPUT
+          echo "$NOTES" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Comment on the PR
+        uses: peter-evans/create-or-update-comment@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          issue-number: ${{ github.event.pull_request.number }}
+          body: |
+            🚀 **Release Preview**  
+            The next version will be **${{ steps.semantic.outputs.version }}** when this PR is merged into **main**.
+
+            <details>
+            <summary>Release notes</summary>
+
+            ${{ steps.semantic.outputs.notes }}
+            </details>
