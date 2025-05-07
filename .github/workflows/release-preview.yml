@@ -24,21 +24,32 @@ jobs:
       - name: Generate release preview
         id: semantic
         run: |
-          # 1) dry-run → sr-output.txt (logs + one JSON at end)
+          # 1) run semantic-release in dry-run mode (no tags, no publish)
           npx semantic-release --dry-run --no-ci --dry-run-ignore-scripts > sr-output.txt || true
 
-          # 2) pull out just the JSON (from first { to matching final })
-          JSON=$(sed -n '/^{/,/^}$/p' sr-output.txt)
+          # 2) Use Node to extract the final JSON object, parse it, and set our outputs
+          node << 'EOF' >> $GITHUB_OUTPUT
+          const fs = require('fs');
 
-          # 3) parse it
-          VERSION=$(printf '%s\n' "$JSON" | jq -r '.nextRelease.version')
-          NOTES=$(printf '%s\n' "$JSON" | jq -r '.nextRelease.notes')
+          // read the entire dry-run log
+          const log = fs.readFileSync('sr-output.txt', 'utf8');
 
-          # 4) expose to subsequent steps
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-          echo "notes<<EOF" >> $GITHUB_OUTPUT
-          echo "$NOTES" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          // match the last {…} block (the semantic-release summary)
+          const m = log.match(/\{[\s\S]*\}$/);
+
+          let version = '';
+          let notes   = 'No release will be generated.';
+
+          if (m) {
+            const data = JSON.parse(m[0]);
+            version = data.nextRelease?.version   || '';
+            notes   = data.nextRelease?.notes     || notes;
+          }
+
+          // expose to later steps
+          console.log('version=' + version);
+          console.log('notes<<EOF\n' + notes + '\nEOF');
+          EOF
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
