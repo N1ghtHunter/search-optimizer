@@ -2,6 +2,12 @@ name: Release Preview
 on:
   pull_request:
     branches: [main]
+
+# Define required permissions explicitly
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   pr-preview:
     runs-on: ubuntu-latest
@@ -25,34 +31,9 @@ jobs:
               "@semantic-release/release-notes-generator"
             ]
           }' > .releaserc.preview.json
-          
-          # Run semantic-release with the preview config
+
+          # Run semantic-release with the preview config and output to log
+          echo "Running release preview with dry run..."
           npx semantic-release --dry-run --extends ./.releaserc.preview.json --branches main
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Add PR Comment with Next Release
-        if: success()
-        uses: actions/github-script@v7
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          script: |
-            const fs = require('fs');
-            try {
-              const releaseOutput = fs.readFileSync('release-notes.md', 'utf8');
-              const body = `## 🚀 Release Preview\n\n${releaseOutput || 'No changes detected that would trigger a release.'}`;
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body
-              });
-            } catch(e) {
-              console.log('No release notes found or error generating comment:', e);
-              github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                body: '## 🚀 Release Preview\n\nNo changes detected that would trigger a release, or there was an error generating the preview.'
-              });
-            }
