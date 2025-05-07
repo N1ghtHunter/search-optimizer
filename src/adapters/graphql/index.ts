@@ -3,7 +3,7 @@
  * Allows using GraphQL clients like Apollo with SearchOptimizer
  */
 
-import { SearchExecutor } from '../types';
+import type { SearchExecutor } from '../../types';
 
 export interface GraphQLClientLike {
   /**

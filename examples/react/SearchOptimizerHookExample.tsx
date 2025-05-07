@@ -1,5 +1,6 @@
 import React from 'react';
-import { useSearchOptimizer, createFetchExecutor } from '../../src';
+import { useSearchOptimizer } from '../../src/adapters/react';
+import { createFetchExecutor } from '../../src/adapters/fetch';
 
 interface SearchResult {
   id: string;
