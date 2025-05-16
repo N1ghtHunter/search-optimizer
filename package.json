@@ -1,6 +1,6 @@
 {
   "name": "search-optimizer",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "An optimized, framework-agnostic solution for handling search-as-you-type functionality",
   "author": "Mazin Islam <mazinislam431@gmail.com>",
   "repository": {

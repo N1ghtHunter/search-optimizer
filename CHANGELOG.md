@@ -1,3 +1,9 @@
+## [2.0.1](https://github.com/N1ghtHunter/search-optimizer/compare/v2.0.0...v2.0.1) (2025-05-16)
+
+### Bug Fixes
+
+* trigger patch version release ([a9a35f6](https://github.com/N1ghtHunter/search-optimizer/commit/a9a35f6dda0687a8d8159477e07d73e34a3487f3))
+
 ## [2.0.0](https://github.com/N1ghtHunter/search-optimizer/compare/v1.1.0...v2.0.0) (2025-05-07)
 
 ### ⚠ BREAKING CHANGES
